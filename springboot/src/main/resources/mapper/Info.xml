@@ -1,0 +1,19 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org// DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.InfoMapper">
+
+    <resultMap id="infoMap" type="com.example.demo.entity.Info">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <collection property="contentList" javaType="ArrayList" ofType="com.example.demo.entity.InfoContent">
+            <!-- column对应查询返回的列，property对应返回的对象的属性-->
+            <result column="if_content" property="content"/>
+        </collection>
+    </resultMap>
+
+    <!-- SQL 查询-->
+    <select id="findPage" resultMap="infoMap">
+        SELECT info.*, info_content.content if_content from info
+        left join info_content on info.id = info_content.info_id
+    </select>
+</mapper>
